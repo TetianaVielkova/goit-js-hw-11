@@ -78,6 +78,12 @@ function createGalleryItem(name) {
 
         galleryRef.insertAdjacentHTML("beforeend", markup);
         lightbox.refresh();
+        const { height: cardHeight } = galleryRef.firstElementChild.getBoundingClientRect();
+
+        window.scrollBy({
+        top: cardHeight * 2,
+        behavior: "smooth",
+    });
     };
 
 loadMoreBtn.addEventListener('click', (name) => {
