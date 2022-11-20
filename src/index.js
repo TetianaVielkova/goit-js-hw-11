@@ -16,7 +16,7 @@ loadMoreBtn.style.display = 'none';
 
 let perPage = 40;
 let page = 0;
-let name = searchQuery.value;
+let name = '';
 
 let lightbox = new SimpleLightbox('.gallery a', {
     captions: true,
@@ -30,6 +30,8 @@ async function onSearch(e){
     loadMoreBtn.style.display = 'none';
     
     page = 1;
+    name = e.currentTarget.elements.searchQuery.value.trim();
+
     fetchImages(name, page, perPage)
     .then(name => {
         let totalPages = name.totalHits / perPage;
@@ -49,7 +51,7 @@ async function onSearch(e){
             gallery.innerHTML = '';
         }
         })
-        .catch(error => console.log('ERROR: ' + error));
+        .catch(error => console.log('ERROR: ', error));
 }
 
 
@@ -79,6 +81,7 @@ function createGalleryItem(name) {
     };
 
 loadMoreBtn.addEventListener('click', (name) => {
+    name = e.currentTarget.elements.searchQuery.value.trim();
     page +=1;
     fetchImages(name, page, perPage)
     .then(name => {
