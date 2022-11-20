@@ -1,27 +1,22 @@
 import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import axios from 'axios';
+
+import { fetchImages } from './fetchImages';
+
 
 const formRef = document.querySelector('#search-form');
 const galleryRef = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
 
-loadMoreBtn.addEventListener('click', onClickLoadMore);
+
 formRef.addEventListener('submit', onSearch);
 
 loadMoreBtn.style.display = 'none';
 
-const API_KEY = '31367220-5a96f337331fc9bdf5943a9df';
-const BASE_URL = 'https://pixabay.com/api/';
-
-const options = {
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: 'true',
-    per_page: 40,
-    page: 1,
-};
+let perPage = 40;
+let page = 0;
+let name = searchQuery.value;
 
 let lightbox = new SimpleLightbox('.gallery a', {
     captions: true,
@@ -29,44 +24,37 @@ let lightbox = new SimpleLightbox('.gallery a', {
     captionDelay: 250,
 });
 
-let maxQuery = 0;
-
-function onClickLoadMore(){
-    loadMoreBtn.style.display = "none";
-    fetchPictures(fetchPictures.searchQuery)
-    .then(createGalleryItem);
-}
-function onSearch(e){
+async function onSearch(e){
     e.preventDefault();
     galleryRef.innerHTML = '';
-    maxQuery = 0;
-    options.page = 1;
-    fetchPictures.searchQuery = e.currentTarget.elements.searchQuery.value;
-    fetchPictures(fetchPictures.searchQuery)
-    .then(data => {
-        createGalleryItem(data);
+    loadMoreBtn.style.display = 'none';
+    
+    page = 1;
+    fetchImages(name, page, perPage)
+    .then(name => {
+        let totalPages = name.totalHits / perPage;
+
+        if(name.hits.length > 0) {
+            Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
+            createGalleryItem(name);
         
-    });
+        if (page < totalPages) {
+            loadBtn.style.display = 'block';
+        } else {
+            loadBtn.style.display = 'none';
+            Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
+        } 
+        }else {
+            Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+            gallery.innerHTML = '';
+        }
+        })
+        .catch(error => console.log('ERROR: ' + error));
 }
 
-async function fetchPictures(searchQuery){
-    try {
-        const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${searchQuery}`, { options } );
-        options.page +=1;
-        return response.data;
-    } catch(error) {
-        console.log(error);
-    }
-}
 
-function createGalleryItem(data) {
-
-    if ((searchQuery.length === 0)) {
-        Notiflix.Notify.warning('Sorry, there are no images matching your search query. Please try again.');
-        return
-    }
-    else {
-    const markup = data.hits.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
+function createGalleryItem(name) {
+    const markup = name.hits.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
         return `<div class="photo-card">
         <a href="${largeImageURL}">
             <img class="gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy" />
@@ -88,12 +76,19 @@ function createGalleryItem(data) {
 
         galleryRef.insertAdjacentHTML("beforeend", markup);
         lightbox.refresh();
-        loadMoreBtn.style.display = "block";
-        maxQuery += 40;
-        if (maxQuery >= data.totalHits) {
-            Notiflix.Notify.warning(`We're sorry, but you've reached the end of search results.`);
-            loadMoreBtn.style.display = "none";
-            return
-        }
     };
-}
+
+loadMoreBtn.addEventListener('click', (name) => {
+    page +=1;
+    fetchImages(name, page, perPage)
+    .then(name => {
+        let totalPages = name.totalHits / perPage;
+        createGalleryItem(name);
+        if (page >= totalPages) {
+            loadMoreBtn.style.display = 'none';
+            Notiflix.Notify.info(
+                "We're sorry, but you've reached the end of search results."
+            );
+        }
+    });
+}, true);
