@@ -2,6 +2,7 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+
 import { fetchImages } from './fetchImages';
 
 
@@ -17,6 +18,8 @@ loadMoreBtn.style.display = 'none';
 let perPage = 40;
 let page = 0;
 let name = '';
+
+
 
 let lightbox = new SimpleLightbox('.gallery a', {
     captions: true,
