@@ -1,0 +1,23 @@
+.gallery{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.photo__card {
+    max-width: 370px;
+}
+
+.info {
+    display: flex;
+    justify-content: space-evenly;
+    border-radius: 0 0 5px 5px;
+}
+
+.info__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

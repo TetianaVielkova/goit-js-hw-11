@@ -1,0 +1,32 @@
+html {
+    scroll-behavior: smooth;
+}
+
+input {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    display: block;
+    min-width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1400px;
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
