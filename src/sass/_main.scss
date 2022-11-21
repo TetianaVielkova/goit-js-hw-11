@@ -2,6 +2,17 @@ html {
     scroll-behavior: smooth;
 }
 
+body {
+    background-color: rgba(157, 208, 244, 0.534);
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+    
+}
+
 input {
     margin: 0;
     padding: 0;
@@ -18,10 +29,14 @@ a {
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1200px;
     padding: 15px;
     margin-left: auto;
     margin-right: auto;
+}
+
+button {
+    cursor: pointer;
 }
 
 
