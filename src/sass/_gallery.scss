@@ -21,6 +21,11 @@
     
 }
 
+.photo__card:hover,
+.photo__card:focus {
+    transform: scale(1.10);
+}
+
 .info {
     display: flex;
     justify-content: space-evenly;
