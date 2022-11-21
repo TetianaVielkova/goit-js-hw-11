@@ -28,6 +28,7 @@
 .search-form button:focus {
     background-color: rgb(36, 9, 146);
     color: #fff;
+    border: 2px solid #fff;
 }
 
 .load-more {
@@ -43,6 +44,6 @@
 .load-more:hover,
 .load-more:focus{
     color: rgb(36, 9, 146);
-    background-color: #fff;
-    border: rgb(36, 9, 146);
+    background-color: rgba(157, 208, 244, 0.534);
+    border: 2px solid rgb(36, 9, 146);
 }
