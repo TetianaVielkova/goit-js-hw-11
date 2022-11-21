@@ -1,1 +1,21 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+
+input {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    padding: 20px;
+}
+
