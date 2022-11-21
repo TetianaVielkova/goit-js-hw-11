@@ -57,8 +57,8 @@ function onSearch(e){
 
 function createGalleryItem(name) {
     const markup = name.hits.map(({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) => {
-        return `<a href="${largeImageURL}">
-        <div class="photo__card">
+        return `<div class="photo__card">
+        <a class="gallery__link" href="${largeImageURL}">
             <img class="gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy" />
         </a>
         <div class="info">
