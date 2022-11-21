@@ -24,6 +24,11 @@
     font-size: 28px;
 }
 
+.search-form button:hover,
+.search-form button:focus {
+    background-color: rgb(36, 9, 146);
+    color: #fff;
+}
 
 .load-more {
     margin: 50px auto;
@@ -33,4 +38,11 @@
     border: none;
     border-radius: 5px;
     font-size: 28px;
+}
+
+.load-more:hover,
+.load-more:focus{
+    color: rgb(36, 9, 146);
+    background-color: #fff;
+    border: rgb(36, 9, 146);
 }
